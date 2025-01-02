@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark Downloader Pro - Video Downloader</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo">Dark Downloader Pro</div>
-            <ul>
+            <div class="logo">Dark Downloader Pro v1.0.1</div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#whats-new">What's New</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#download">Download</a></li>
                 <li><a href="#docs">Documentation</a></li>
@@ -20,96 +24,212 @@
     </header>
 
     <main>
+        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
                 <h1>Dark Downloader Pro</h1>
-                <p>Download videos and audio from YouTube and more than 200 Sites with style</p>
-                <a href="DarkDownloaderPro_Setup.exe" class="download-btn">
-                    <i class="fab fa-windows"></i> Download for Windows
-                </a>
+                <div class="hero-version">
+                    <span class="version-badge">v1.0.1 Final</span>
+                    <p class="release-date">Released January 2025</p>
+                </div>
+                <p class="subtitle">Download videos and extract audio from YouTube and 200+ sites</p>
+                <div class="hero-actions">
+                    <a href="DarkDownloaderPro_Setup.exe" class="download-btn primary">
+                        <i class="fab fa-windows"></i> Download for Windows
+                    </a>
+                    <a href="#whats-new" class="download-btn secondary">
+                        <i class="fas fa-arrow-down"></i> See What's New
+                    </a>
+                </div>
+                <p class="version-info">Windows 10/11 64-bit • Size: ~50MB</p>
             </div>
         </section>
 
-        <section id="features" class="features">
-            <h2>Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-video"></i>
-                    <h3>Multiple Formats</h3>
-                    <p>Download videos in MP4 format from 240p to 4K quality</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-music"></i>
-                    <h3>Audio Extraction</h3>
-                    <p>Extract audio in MP3 and M4A formats with high quality</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-paint-brush"></i>
-                    <h3>Dark/Light Theme</h3>
-                    <p>Switch between dark and light themes for comfort</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-bolt"></i>
-                    <h3>Fast Downloads</h3>
-                    <p>Optimized for speed with lightweight processing</p>
+        <!-- What's New Section -->
+        <section id="whats-new" class="whats-new">
+            <div class="section-container">
+                <h2>What's New in v1.0.1</h2>
+                <div class="update-grid">
+                    <div class="update-card">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Performance</h3>
+                        <ul>
+                            <li>Optimized FFmpeg integration</li>
+                            <li>Reduced memory usage</li>
+                            <li>Faster download speeds</li>
+                        </ul>
+                    </div>
+                    <div class="update-card">
+                        <i class="fas fa-plus-circle"></i>
+                        <h3>New Features</h3>
+                        <ul>
+                            <li>Bandwidth control</li>
+                            <li>Better progress tracking</li>
+                            <li>Enhanced error handling</li>
+                        </ul>
+                    </div>
+                    <div class="update-card">
+                        <i class="fas fa-bug"></i>
+                        <h3>Bug Fixes</h3>
+                        <ul>
+                            <li>Theme switching fixed</li>
+                            <li>Download notifications</li>
+                            <li>File naming issues</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
+        
+
+        <!-- Download Section -->
         <section id="download" class="download">
-            <h2>Download Now</h2>
-            <div class="download-options">
-                <div class="download-card active">
-                    <i class="fab fa-windows"></i>
-                    <h3>Windows</h3>
-                    <p>Version 1.0.0</p>
-                    <a href="DarkDownloaderPro_Setup.exe" class="btn">Download</a>
+            <div class="section-container">
+                <h2>Download Now</h2>
+                <p class="section-subtitle">Choose your platform</p>
+
+                <div class="platform-grid">
+                    <div class="platform-card active" id="windows-download">
+                        <div class="platform-icon">
+                            <i class="fab fa-windows"></i>
+                        </div>
+                        <h3>Windows</h3>
+                        <div class="platform-info">
+                            <span class="version">Version 1.0.1 (Final)</span>
+                            <span class="size">~50 MB</span>
+                            <ul class="requirements">
+                                <li>Windows 10/11 64-bit</li>
+                                <li>4GB RAM</li>
+                                <li>100MB Space</li>
+                            </ul>
+                        </div>
+                        <a href="DarkDownloaderPro_Setup.exe" class="download-button">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+
+                    <div class="platform-card coming-soon" id="android-download">
+                        <div class="platform-icon">
+                            <i class="fab fa-android"></i>
+                        </div>
+                        <h3>Android</h3>
+                        <div class="platform-info">
+                            <span class="status">Coming Soon</span>
+                            <p class="eta">Expected Q2 2025</p>
+                        </div>
+                        <button class="download-button disabled">
+                            <i class="fas fa-clock"></i> Coming Soon
+                        </button>
+                    </div>
+
+                    <div class="platform-card disabled">
+                        <i class="fab fa-apple"></i>
+                        <h3>MacOS</h3>
+                        <div class="platform-info">
+                            <span class="status">Coming Soon</span>
+                            <p class="eta">Expected Q2 2025</p>
+                        </div>
+                        <button class="download-button disabled">
+                            <i class="fas fa-clock"></i> Coming Soon
+                        </button>
+                    </div>
+                    <div class="platform-card disabled">
+                        <i class="fab fa-linux"></i>
+                        <h3>Linux</h3>
+                        <div class="platform-info">
+                            <span class="status">Coming Soon</span>
+                            <p class="eta">Expected Q2 2025</p>
+                        </div>
+                        <button class="download-button disabled">
+                            <i class="fas fa-clock"></i> Coming Soon
+                        </button>
+                    </div>
                 </div>
-                <div class="download-card disabled">
-                    <i class="fab fa-apple"></i>
-                    <h3>MacOS</h3>
-                    <p>Coming Soon</p>
-                    <button class="btn" disabled>Coming Soon</button>
-                </div>
-                <div class="download-card disabled">
-                    <i class="fab fa-linux"></i>
-                    <h3>Linux</h3>
-                    <p>Coming Soon</p>
-                    <button class="btn" disabled>Coming Soon</button>
+
+                <div id="mobile-notice" class="mobile-notice" style="display: none;">
+                    <i class="fas fa-info-circle"></i>
+                    <h4>Mobile Device Detected</h4>
+                    <p>Android version coming soon! Currently available for Windows only.</p>
                 </div>
             </div>
         </section>
 
+        <!-- Documentation Section -->
         <section id="docs" class="docs">
-            <h2>Documentation</h2>
-            <div class="docs-content">
-                <h3>How to Use</h3>
-                <ol>
-                    <li>Download and run DarkDownloaderPro.exe</li>
-                    <li>Paste a YouTube video URL</li>
-                    <li>Click Search to see available formats</li>
-                    <li>Double-click your preferred format to start download</li>
-                    <li>Wait for the download to complete</li>
-                </ol>
+            <div class="section-container">
+                <h2>Documentation</h2>
+                <div class="docs-content">
+                    <h3>Installation Guide</h3>
+                    <ol>
+                        <li>Download DarkDownloaderPro_Setup.exe</li>
+                        <li>Run the installer with administrator privileges</li>
+                        <li>Follow the installation wizard</li>
+                        <li>Launch Dark Downloader Pro from desktop or start menu</li>
+                    </ol>
 
-                <h3>Supported Formats</h3>
-                <ul>
-                    <li>Video: MP4 (240p to 4K)</li>
-                    <li>Audio: MP3, M4A</li>
-                </ul>
+                    <h3>Supported Formats</h3>
+                    <ul>
+                        <li>Video Formats:
+                            <ul>
+                                <li>MP4 (240p, 360p, 480p, 720p, 1080p, 1440p, 2160p)</li>
+                                <li>Automatic quality selection available</li>
+                            </ul>
+                        </li>
+                        <li>Audio Formats:
+                            <ul>
+                                <li>MP3 (High quality, 192kbps)</li>
+                                <li>M4A (Original quality)</li>
+                            </ul>
+                        </li>
+                    </ul>
 
-                <h3>System Requirements</h3>
-                <ul>
-                    <li>Windows 10/11</li>
-                    <li>4GB RAM minimum</li>
-                    <li>No additional software required</li>
-                </ul>
+                    <h3>System Requirements</h3>
+                    <ul class="requirements-list">
+                        <li>Windows 10/11 (64-bit)</li>
+                        <li>4GB RAM recommended</li>
+                        <li>100MB free disk space</li>
+                        <li>Internet connection</li>
+                    </ul>
+
+                    <h3>Tips & Tricks</h3>
+                    <ul class="tips-list">
+                        <li>Use bandwidth limiting for stable downloads</li>
+                        <li>Double-click format to start download</li>
+                        <li>Check Downloads tab for progress</li>
+                        <li>Use dark theme for night usage</li>
+                    </ul>
+                </div>
             </div>
         </section>
+
     </main>
 
     <footer>
-        <p>&copy; 2025 Dark Downloader Pro. Created by Dark Ranjan</p>
+        <div class="footer-content">
+            <div class="footer-section branding">
+                <h4>Dark Downloader Pro</h4>
+                <p><strong>Version:</strong> 1.0.1 (Final)</p>
+                <p><strong>Created by:</strong> DARK RANAN</p>
+            </div>
+            <div class="footer-section quick-links">
+                <h4>Quick Links</h4>
+                <a href="#whats-new"><i class="fas fa-chevron-right"></i> What's New</a>
+                <a href="#features"><i class="fas fa-chevron-right"></i> Features</a>
+                <a href="#download"><i class="fas fa-chevron-right"></i> Download</a>
+                <a href="#docs"><i class="fas fa-chevron-right"></i> Documentation</a>
+            </div>
+            <div class="footer-section contact">
+                <h4>Connect</h4>
+                <p><i class="fas fa-envelope"></i> support@darkranjan.me</p>
+                <p><i class="fas fa-globe"></i> darkranjan.me</p>
+                <p><i class="fas fa-code-branch"></i> Version 1.0.1 (Final)</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Dark Downloader Pro. All rights reserved.</p>
+        </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>
