@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://darkranjan.me/homepage/sitemap.xml

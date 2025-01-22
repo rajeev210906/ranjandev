@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Dark Search</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SEARCH ENGINE...</h1>
+            <div class="time-display">
+                <div class="time" id="currentTime">00:00</div>
+                <div class="date" id="currentDate">Loading...</div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="search-box">
+                <form id="search-form" action="https://www.google.com/search" method="GET">
+                    <input type="text" name="q" id="search-input" autocomplete="off" placeholder="Search the web...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+
+            <div class="quick-links" id="quickLinks">
+                <!-- Links will be dynamically generated -->
+            </div>
+
+            <!-- Add Settings Button -->
+            <button id="settingsBtn" class="settings-btn">
+                <i class="fas fa-cog"></i>
+            </button>
+
+            <!-- Settings Menu -->
+            <div id="settingsMenu" class="settings-menu">
+                <button class="menu-item" id="editShortcuts" title="Edit your shortcuts">
+                    <i class="fas fa-link"></i> Edit Shortcuts
+                </button>
+                <button class="menu-item" id="changeTheme" title="Change theme colors">
+                    <i class="fas fa-palette"></i> Change Theme
+                </button>
+                <button class="menu-item" id="changeBackground" title="Change background image">
+                    <i class="fas fa-image"></i> Change Background
+                </button>
+                <button class="menu-item" id="aboutDev" title="About the developer">
+                    <i class="fas fa-info-circle"></i> About Developer
+                </button>
+                <button class="menu-item" id="backupRestore">
+                    <i class="fas fa-sync"></i> Backup/Restore
+                </button>
+                <button class="menu-item" id="changeFonts" title="Customize fonts">
+                    <i class="fas fa-font"></i> Change Fonts
+                </button>
+            </div>
+
+            <!-- Shortcuts Modal -->
+            <div id="settingsModal" class="modal">
+                <div class="modal-content">
+                    <h2>Customize Shortcuts</h2>
+                    <div id="shortcutsList"></div>
+                    <button id="addShortcut" class="add-btn">Add New Shortcut</button>
+                    <button id="closeModal" class="close-btn">Save & Close</button>
+                </div>
+            </div>
+
+            <!-- Theme Modal -->
+            <div id="themeModal" class="modal">
+                <div class="modal-content">
+                    <h2>Select Theme</h2>
+                    <p class="modal-description">Choose a theme that suits your style</p>
+                    <div class="theme-grid">
+                        <div class="theme-option" data-theme="dark">
+                            <div class="theme-preview dark"></div>
+                            <span>Dark</span>
+                        </div>
+                        <div class="theme-option" data-theme="light">
+                            <div class="theme-preview light"></div>
+                            <span>Light</span>
+                        </div>
+                        <div class="theme-option" data-theme="navy">
+                            <div class="theme-preview navy"></div>
+                            <span>Navy</span>
+                        </div>
+                        <div class="theme-option" data-theme="neon-blue">
+                            <div class="theme-preview neon-blue"></div>
+                            <span>Neon Blue</span>
+                        </div>
+                        <div class="theme-option" data-theme="neon-purple">
+                            <div class="theme-preview neon-purple"></div>
+                            <span>Neon Purple</span>
+                        </div>
+                        <div class="theme-option" data-theme="neon-green">
+                            <div class="theme-preview neon-green"></div>
+                            <span>Neon Green</span>
+                        </div>
+                    </div>
+                    <button class="close-btn">Close</button>
+                </div>
+            </div>
+
+            <!-- Background Modal -->
+            <div id="backgroundModal" class="modal">
+                <div class="modal-content">
+                    <h2>Change Background</h2>
+                    <p class="modal-description">Drop an image anywhere or select from presets</p>
+                    <div class="background-options">
+                        <div class="background-option" data-bg="none">
+                            <div class="bg-preview none"></div>
+                            <span>None</span>
+                        </div>
+                        <div class="background-option" data-bg="neon-cyberpunk">
+                            <div class="bg-preview neon-cyberpunk"></div>
+                            <span>Neon Cyberpunk</span>
+                        </div>
+                        <div class="background-option" data-bg="neon-grid">
+                            <div class="bg-preview neon-grid"></div>
+                            <span>Neon Grid</span>
+                        </div>
+                        <div class="background-option" data-bg="neon-wave">
+                            <div class="bg-preview neon-wave"></div>
+                            <span>Neon Wave</span>
+                        </div>
+                        <div class="background-option" data-bg="neon-city">
+                            <div class="bg-preview neon-city"></div>
+                            <span>Neon City</span>
+                        </div>
+                        <div class="background-option" data-bg="neon-abstract">
+                            <div class="bg-preview neon-abstract"></div>
+                            <span>Neon Abstract</span>
+                        </div>
+                    </div>
+                    <div class="custom-bg">
+                        <label for="bgInput">Custom Background:</label>
+                        <input type="file" id="bgInput" accept="image/*" title="Choose an image file">
+                        <div class="custom-bg-preview"></div>
+                        <p class="help-text">Supports: JPG, PNG, GIF (Max: 5MB)</p>
+                    </div>
+                    <button class="close-btn">Close</button>
+                </div>
+            </div>
+
+            <!-- Backup/Restore Modal -->
+            <div id="backupModal" class="modal">
+                <div class="modal-content">
+                    <h2>Backup & Restore Settings</h2>
+                    <div class="backup-options">
+                        <button id="exportSettings" class="action-btn">
+                            <i class="fas fa-download"></i> Export Settings
+                        </button>
+                        <button id="importSettings" class="action-btn">
+                            <i class="fas fa-upload"></i> Import Settings
+                        </button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;">
+                    </div>
+                    <button class="close-btn">Close</button>
+                </div>
+            </div>
+
+            <!-- About Modal -->
+            <div id="aboutModal" class="modal">
+                <div class="modal-content">
+                    <h2>About Developer</h2>
+                    <div class="about-content">
+                        <img src="developer.png" alt="Developer" class="dev-image">
+                        <h3>RAJEEV RANJAN</h3>
+                        <p>Frontend Developer & UI/UX Enthusiast</p>
+                        <p class="about-description">
+                            Created with ❤️ using HTML, CSS, and JavaScript.
+                            This project is open source and available on GitHub.
+                        </p>
+                        <div class="social-links">
+                            <a href="https://darkranjan.me/" target="_blank" title="Website">
+                                <i class="fab fa-download"></i>
+                            </a>
+                            <a href="https://github.com/Rajeev210906" target="_blank" title="GitHub Profile">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/rajeev2ranjan74" target="_blank" title="LinkedIn Profile">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <button class="close-btn">Close</button>
+                </div>
+            </div>
+
+            <!-- Fonts Modal -->
+            <div id="fontsModal" class="modal">
+                <div class="modal-content">
+                    <h2>Customize Fonts</h2>
+                    <div class="fonts-container">
+                        <div class="font-section">
+                            <h3>Title Font</h3>
+                            <select id="titleFont" class="font-select">
+                                <option value="Arial">Arial</option>
+                                <option value="Helvetica">Helvetica</option>
+                                <option value="Roboto">Roboto</option>
+                                <option value="Open Sans">Open Sans</option>
+                                <option value="Montserrat">Montserrat</option>
+                                <option value="Poppins">Poppins</option>
+                            </select>
+                            <div class="font-preview">The quick brown fox jumps over the lazy dog</div>
+                        </div>
+                        
+                        <div class="font-section">
+                            <h3>Body Font</h3>
+                            <select id="bodyFont" class="font-select">
+                                <option value="Arial">Arial</option>
+                                <option value="Helvetica">Helvetica</option>
+                                <option value="Roboto">Roboto</option>
+                                <option value="Open Sans">Open Sans</option>
+                                <option value="Source Sans Pro">Source Sans Pro</option>
+                                <option value="Lato">Lato</option>
+                            </select>
+                            <div class="font-preview">The quick brown fox jumps over the lazy dog</div>
+                        </div>
+                    </div>
+                    <button class="close-btn">Save & Close</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
