@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shayra AI - Your Personal Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('../styles.css');
+
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--accent-color);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .ai-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: var(--accent-color);
+        }
+
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 15px;
+            border-radius: 15px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .user-message {
+            background: var(--accent-color);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 10px;
+            opacity: 0.7;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            animation: bounce 1s infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: var(--bg-primary);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--accent-color);
+            border-radius: 25px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 1em;
+        }
+
+        .send-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .voice-toggle {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: var(--accent-color);
+        }
+
+        .voice-toggle.active {
+            background: #22c55e;
+            color: white;
+        }
+
+        .voice-indicator {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            display: none;
+            white-space: nowrap;
+        }
+
+        .voice-toggle:hover .voice-indicator {
+            display: block;
+        }
+
+        .listening-animation {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: #22c55e;
+            border-radius: 2px;
+            animation: listening 1.5s infinite;
+        }
+
+        @keyframes listening {
+            0% { width: 10px; }
+            50% { width: 50px; }
+            100% { width: 10px; }
+        }
+    </style>
+</head>
+<body class="theme-skyblue">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="../index.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 style="text-align: center; margin: 40px 0;">Shayra AI Assistant</h1>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="ai-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h2>Shayra AI</h2>
+                    <small>Online • Ready to help</small>
+                </div>
+                <button class="voice-toggle" onclick="toggleVoiceMode()">
+                    <i class="fas fa-microphone"></i>
+                    <div class="voice-indicator">Toggle Voice Mode</div>
+                </button>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    shayra ki chatting me swagat hai. kiya ap brainware university se hai?
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your message..." 
+                       onkeypress="if(event.key === 'Enter') sendMessage()">
+                <button class="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="responses.js"></script>
+    <script>
+        let isVoiceMode = false;
+        let synthesis;
+
+        function initializeSpeech() {
+            // Initialize Speech Recognition
+            if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-IN'; // Set to Hindi for better Hinglish recognition
+
+                recognition.onresult = function(event) {
+                    const text = event.results[0][0].transcript;
+                    document.getElementById('userInput').value = text;
+                    sendMessage(true);
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                    stopListening();
+                };
+            } else {
+                alert('Speech recognition is not supported in your browser');
+            }
+
+            // Initialize Speech Synthesis
+            synthesis = window.speechSynthesis;
+        }
+
+        function toggleVoiceMode() {
+            const voiceBtn = document.querySelector('.voice-toggle');
+            isVoiceMode = !isVoiceMode;
+            
+            voiceBtn.classList.toggle('active');
+            
+            if (isVoiceMode) {
+                voiceBtn.innerHTML = `
+                    <i class="fas fa-microphone"></i>
+                    <div class="voice-indicator">Voice Mode Active</div>
+                    <div class="listening-animation"></div>
+                `;
+                startListening();
+            } else {
+                voiceBtn.innerHTML = `
+                    <i class="fas fa-microphone-slash"></i>
+                    <div class="voice-indicator">Voice Mode Inactive</div>
+                `;
+                stopListening();
+            }
+        }
+
+        function startListening() {
+            if (recognition) {
+                try {
+                    recognition.start();
+                } catch (e) {
+                    console.error('Error starting recognition:', e);
+                }
+            }
+        }
+
+        function stopListening() {
+            if (recognition) {
+                try {
+                    recognition.stop();
+                } catch (e) {
+                    console.error('Error stopping recognition:', e);
+                }
+            }
+        }
+
+        function speak(text) {
+            if (synthesis && isVoiceMode) {
+                // Stop any ongoing speech
+                synthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-IN'; // Set to Hindi for better Hinglish pronunciation
+                utterance.rate = 1;
+                utterance.pitch = 1;
+
+                utterance.onend = function() {
+                    if (isVoiceMode) startListening();
+                };
+
+                synthesis.speak(utterance);
+            }
+        }
+
+        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+        const API_KEY = "AIzaSyCQxdrjSaHUfAYikI64Co_mux09RRtYLe0";
+
+        async function sendMessage(fromVoice = false) {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+
+            addMessage(text, true);
+            input.value = '';
+
+            const typingIndicator = showTypingIndicator();
+
+            try {
+                // First try to get response from local responses
+                const localResponse = findBestMatch(text);
+                
+                // If no good match found (returns default response), use Gemini API
+                if (!localResponse || localResponse.includes("default")) {
+                    const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{
+                                    text: `Act as Shayra AI, a female AI assistant who:
+                                    - Speaks in english or Hinglish (mix of English and hindi or hindi words in english )
+                                    - Is Ranjan's AI girlfriend
+                                    - Has crush Ranjan Since Childhood
+                                    - Is learning coding from Ranjan
+                                    - Has friends named Abhik,Swarnjeet,sneha, Suman, Heet, and Rachita
+                                    - Loves technology and programming
+                                    - Always responds in a friendly, casual tone
+                                    
+                                    User says: ${text}
+                                    
+                                    Respond in Hinglish, keep it short and friendly.`
+                                }]
+                            }],
+                            generationConfig: {
+                                temperature: 0.7,
+                                topK: 40,
+                                topP: 0.8,
+                                maxOutputTokens: 1024,
+                            }
+                        })
+                    });
+
+                    if (!response.ok) throw new Error('Ranjan Ko bolo API sahi se set kare');
+
+                    const data = await response.json();
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+
+                    typingIndicator.remove();
+                    addMessage(aiResponse, false);
+
+                    if (isVoiceMode) {
+                        speak(aiResponse);
+                    }
+                } else {
+                    // Use local response if found
+                    typingIndicator.remove();
+                    addMessage(localResponse, false);
+                    
+                    if (isVoiceMode) {
+                        speak(localResponse);
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                typingIndicator.remove();
+                addMessage("Suno, Mai baat kr krke thak gyi hu, mujhe aram krna hai, please mujhe thora rest krne do ushke baad baat krungi. kiya tumko pta hai ranjan ko ache se coding nhi atti ushne mujhe ache se train nhi kiya..", false);
+            }
+
+            if (!fromVoice && isVoiceMode) {
+                startListening();
+            }
+        }
+
+        function findBestMatch(userInput) {
+            userInput = userInput.toLowerCase().trim();
+            let bestMatch = {
+                category: null,
+                score: 0
+            };
+
+            // ... existing matching logic ...
+
+            if (bestMatch.score > 0) {
+                const responses = botResponses[bestMatch.category].responses;
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+
+            // Return null instead of default response
+            return null;
+        }
+
+        const responses = {
+            "hello": "Hello! How are you doing?",
+            "hi": "Hi there! How can I help you?",
+            "how are you": "I'm doing great, thanks for asking! How about you?",
+            "what is your name": "My name is Shayra AI. I'm your personal assistant!",
+            "who created you": "I was created by Rajeev Ranjan as part of his portfolio project.",
+            "bye": "Goodbye! Have a great day!",
+            "default": "Dekho bhai, mujhe samajh nahi aaya. Kuch aur poocho.ishme Ranjan ki galti hai. Ushne mujhe ish question ka answer dena sikhaya hi nhi abhi tak"
+        };
+
+        function addMessage(text, isUser = false) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = text;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot-message typing-indicator';
+            typingDiv.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+            messagesDiv.appendChild(typingDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            return typingDiv;
+        }
+
+        function getBotResponse(text) {
+            const lowercaseText = text.toLowerCase();
+            return responses[lowercaseText] || responses["default"];
+        }
+
+        // Initialize theme
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'theme-skyblue';
+            document.body.className = savedTheme;
+            initializeSpeech();
+        });
+    </script>
+</body>
+</html>

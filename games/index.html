@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Games</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('../styles.css');
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .game-thumbnail {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .game-info {
+            padding: 15px;
+        }
+
+        .game-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .play-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body class="theme-skyblue">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="../index.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 style="text-align: center; margin: 40px 0;">Browser Games</h1>
+        
+        <div class="games-grid">
+            <!-- Sample Game Cards -->
+            <div class="game-card">
+                <img src="../images/games/snake.png" alt="Snake Game" class="game-thumbnail">
+                <div class="game-info">
+                    <h3 class="game-title">Snake Game</h3>
+                    <a href="snake.html" class="play-btn">
+                        <i class="fas fa-play"></i> Play Now
+                    </a>
+                </div>
+            </div>
+            <!-- Add more game cards as needed -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'theme-skyblue';
+            document.body.className = savedTheme;
+        });
+    </script>
+</body>
+</html>

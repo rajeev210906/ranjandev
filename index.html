@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RANJAN's PROFILE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="./images/profile.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-skyblue">
+    <nav class="navbar">
+        <div class="nav-brand">RANJAN</div>
+        <div class="nav-controls">
+            <button class="time-toggle" aria-label="Toggle time" onclick="toggleTime()">
+                <i class="fas fa-clock"></i>
+            </button>
+            <div class="theme-switcher">
+                <button class="theme-dropdown-btn" aria-label="Theme switcher">
+                    <i class="fas fa-paint-brush"></i>
+                    Themes
+                </button>
+                <div class="theme-dropdown-content">
+                    <div class="theme-option" role="button" tabindex="0" onclick="setTheme('theme-dark')">
+                        <i class="fas fa-moon"></i>
+                        Dark
+                    </div>
+                    <div class="theme-option" role="button" tabindex="0" onclick="setTheme('theme-light')">
+                        <i class="fas fa-sun"></i>
+                        Light
+                    </div>
+                    <div class="theme-option" role="button" tabindex="0" onclick="setTheme('theme-skyblue')">
+                        <i class="fas fa-cloud"></i>
+                        Sky Blue
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="datetime">
+            <div class="time">
+                <span id="current-time"></span>
+            </div>
+            <div class="date-day">
+                <span id="current-date"></span> • 
+                <span id="current-day"></span>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <div class="profile-pic">
+                <img src="./images/RANJAN.png" alt="Profile">
+            </div>
+            <h1>Rajeev Ranjan</h1>
+            <p>Full-Stack Developer</p>
+            <div class="social-links">
+                <a href="https://github.com/Rajeev210906" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/rajeev210906" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://twitter.com/yourusername" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://youtube.com/dark-ranjan" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <a href="./projects/index.html" class="quick-link-card">
+                <i class="fas fa-code"></i>
+                <span>Projects</span>
+            </a>
+            <a href="./blogs/index.html" class="quick-link-card">
+                <i class="fas fa-book"></i>
+                <span>Blog</span>
+            </a>
+            <a href="./tools/index.html" class="quick-link-card">
+                <i class="fas fa-tools"></i>
+                <span>Tools</span>
+            </a>
+            
+            <!-- Add new quick links -->
+            <a href="./shayra-ai/index.html" class="quick-link-card">
+                <i class="fas fa-robot"></i>
+                <span>Shayra AI</span>
+            </a>
+            <a href="./college/index.html" class="quick-link-card">
+                <i class="fas fa-university"></i>
+                <span>College</span>
+            </a>
+            <a href="./library/index.html" class="quick-link-card">
+                <i class="fas fa-book-reader"></i>
+                <span>Library</span>
+            </a>
+            <a href="./courses/index.html" class="quick-link-card">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Courses</span>
+            </a>
+            <a href="./games/index.html" class="quick-link-card">
+                <i class="fas fa-gamepad"></i>
+                <span>Games</span>
+            </a>
+            <a href="./admin/index.html" class="quick-link-card">
+                <i class="fas fa-user-shield"></i>
+                <span>Admin</span>
+            </a>
+            <a href="#" class="quick-link-card" onclick="toggleAboutModal(event)">
+                <i class="fas fa-info-circle"></i>
+                <span>About</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Add About Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="about-card">
+                <h2>About Me</h2>
+                <div class="about-info">
+                    <p><strong>Name:</strong> Rajeev Ranjan</p>
+                    <p><strong>Education:</strong> Pursuing B.Tech CSE Degree</p>
+                    <p><strong>University:</strong> Brainware University, Kolkata</p>
+                    <div class="social-links">
+                        <a href="https://github.com/Rajeev210906" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/rajeev210906" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                        <a href="https://youtube.com/dark-ranjan" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <!-- Add before closing body tag -->
+    <a href="https://youtube.com/@ranjantech99" target="_blank" rel="noopener noreferrer" class="floating-yt">
+        <i class="fab fa-youtube"></i>
+        <span>Ranjan-Tech</span>
+    </a>
+</body>
+</html>

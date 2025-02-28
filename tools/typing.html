@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('../styles.css');
+
+        .typing-container {
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .stat-box {
+            background: var(--bg-primary);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .stat-box h3 {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .stat-box span {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .text-display {
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .text-display.active {
+            border: 2px solid var(--accent-color);
+        }
+
+        .correct {
+            color: #22c55e;
+        }
+
+        .incorrect {
+            color: #ef4444;
+            text-decoration: underline;
+        }
+
+        .current {
+            background: var(--accent-color);
+            color: white;
+            border-radius: 2px;
+        }
+
+        .input-area {
+            margin-top: 20px;
+        }
+
+        .input-area textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            font-size: 1.1em;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            resize: none;
+            height: 100px;
+        }
+
+        .btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn.restart {
+            background: #22c55e;
+        }
+    </style>
+</head>
+<body class="theme-skyblue">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 style="text-align: center; margin: 40px 0;">Typing Speed Test</h1>
+        
+        <div class="typing-container">
+            <div class="stats">
+                <div class="stat-box">
+                    <h3>Time</h3>
+                    <span id="time">60s</span>
+                </div>
+                <div class="stat-box">
+                    <h3>WPM</h3>
+                    <span id="wpm">0</span>
+                </div>
+                <div class="stat-box">
+                    <h3>Accuracy</h3>
+                    <span id="accuracy">0%</span>
+                </div>
+            </div>
+
+            <div id="text-display" class="text-display"></div>
+            
+            <div class="input-area">
+                <textarea 
+                    id="input-field" 
+                    placeholder="Start typing when ready..." 
+                    oninput="handleInput()"
+                    onfocus="startTest()"></textarea>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="resetTest()" class="btn restart">
+                    <i class="fas fa-redo"></i> Restart Test
+                </button>
+            </div>
+        </div>
+    </div>
+    <footer style="text-align: center; padding: 20px; color: var(--text-secondary); margin-top: 40px;">
+        Made with ❤️ By RANJAN
+    </footer>
+    <script>
+        let TIME_LIMIT = 60;
+        let timeLeft = TIME_LIMIT;
+        let timer = null;
+        let isTestActive = false;
+
+        const texts = [
+            "The quick brown fox jumps over the lazy dog. Practice makes perfect when it comes to typing.",
+            "Programming is the art of telling a computer what to do. It requires logic and creativity.",
+            "Web development combines design and functionality to create amazing user experiences.",
+            "Ranjan is a web developer who loves to code and build cool projects. He is always learning new things.",
+            "The best way to learn is by doing. Practice coding every day to improve your skills.",
+            "Coding is like solving puzzles. It requires patience and persistence to find the right solution.",
+            "The internet is a vast place with endless possibilities. You can learn anything online.",
+            "The future is digital. Technology is changing the world and creating new opportunities.",
+            "Learning to code is like learning a new language. It opens up a whole new world of possibilities.",
+            "The sky is the limit when it comes to coding. You can build anything you can imagine.",
+            "Coding is a superpower that allows you to create amazing things. Use it wisely.",
+            "The best coders are those who never stop learning. Stay curious and keep growing.",
+            "The world needs more coders. You can make a difference by building something great.",
+            "Coding is a journey of self-discovery. You will learn more about yourself than you ever thought possible.",
+            "The best coders are those who are always willing to learn. Stay humble and keep improving.",
+            "Coding is not just about writing code. It's about solving problems and making the world a better place.",
+            "The future belongs to those who code. You can create the future you want to see.",
+            "krishna said in gita that do your work without thinking about the result",
+            "The best way to predict the future is to create it. You have the power to shape your destiny.",
+            "Coding is the closest thing we have to magic. You can create something out of nothing with just a few lines of code.",
+            "lord krishna said in gita always keep faith in me and do your work",
+            "developers are the creators of the digital world. They build the apps and websites we use every day.",
+            "The internet is a vast place with endless possibilities. You can learn anything online.",
+            "The future is digital. Technology is changing the world and creating new opportunities.",
+            "Learning to code is like learning a new language. It opens up a whole new world of possibilities.",
+            "The sky is the limit when it comes to coding. You can build anything you can imagine.",
+            
+        ];
+
+        const textDisplay = document.getElementById("text-display");
+        const inputField = document.getElementById("input-field");
+        const timeDisplay = document.getElementById("time");
+        const wpmDisplay = document.getElementById("wpm");
+        const accuracyDisplay = document.getElementById("accuracy");
+
+        let currentText = "";
+        let characterTyped = 0;
+        let mistakes = 0;
+
+        function initializeTest() {
+            currentText = texts[Math.floor(Math.random() * texts.length)];
+            textDisplay.innerHTML = currentText;
+            inputField.value = "";
+            characterTyped = 0;
+            mistakes = 0;
+            timeLeft = TIME_LIMIT;
+            isTestActive = false;
+            updateDisplay();
+        }
+
+        function startTest() {
+            if (!isTestActive) {
+                isTestActive = true;
+                timer = setInterval(updateTimer, 1000);
+                textDisplay.classList.add('active');
+            }
+        }
+
+        function updateTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timeDisplay.textContent = timeLeft + 's';
+            } else {
+                finishTest();
+            }
+        }
+
+        function handleInput() {
+            const currentInput = inputField.value;
+            const currentInputArray = currentInput.split('');
+            
+            characterTyped++;
+            mistakes = 0;
+
+            let displayText = "";
+            currentText.split('').forEach((char, index) => {
+                let displayClass = '';
+                if (index < currentInputArray.length) {
+                    if (char === currentInputArray[index]) {
+                        displayClass = 'correct';
+                    } else {
+                        displayClass = 'incorrect';
+                        mistakes++;
+                    }
+                }
+                displayText += `<span class="${displayClass}">${char}</span>`;
+            });
+
+            textDisplay.innerHTML = displayText;
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const timeElapsed = TIME_LIMIT - timeLeft;
+            const wpm = Math.round((((characterTyped / 5) - mistakes) / timeElapsed) * 60);
+            const accuracy = Math.round(((characterTyped - mistakes) / characterTyped) * 100);
+
+            wpmDisplay.textContent = timeElapsed ? wpm : 0;
+            accuracyDisplay.textContent = characterTyped ? accuracy + '%' : '0%';
+        }
+
+        function finishTest() {
+            clearInterval(timer);
+            inputField.disabled = true;
+            textDisplay.classList.remove('active');
+        }
+
+        function resetTest() {
+            clearInterval(timer);
+            initializeTest();
+            inputField.disabled = false;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'theme-skyblue';
+            document.body.className = savedTheme;
+            initializeTest();
+        });
+    </script>
+</body>
+</html>

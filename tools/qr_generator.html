@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('../styles.css');
+
+        .qr-container {
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 10px 0;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .controls {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #qrcode {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .download-btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="theme-skyblue">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 style="text-align: center; margin: 40px 0;">QR Code Generator</h1>
+        
+        <div class="qr-container">
+            <div class="input-group">
+                <textarea id="text" placeholder="Enter URL or text"></textarea>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Size:</label>
+                    <input type="range" min="100" max="400" value="200" id="size">
+                    <span id="sizeValue">200 x 200</span>
+                </div>
+            </div>
+
+            <button class="btn" onclick="generateQR()">
+                <i class="fas fa-qrcode"></i> Generate QR Code
+            </button>
+
+            <div id="qrcode"></div>
+
+            <button class="btn download-btn" onclick="downloadQR()" style="display: none;">
+                <i class="fas fa-download"></i> Download QR Code
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let qr = null;
+
+        function generateQR() {
+            const text = document.getElementById('text').value;
+            const size = document.getElementById('size').value;
+            
+            if (!text) {
+                alert('Please enter some text or URL');
+                return;
+            }
+
+            // Clear previous QR code
+            document.getElementById('qrcode').innerHTML = '';
+            
+            // Generate new QR code
+            qr = new QRCode(document.getElementById('qrcode'), {
+                text: text,
+                width: size,
+                height: size,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            document.querySelector('.download-btn').style.display = 'inline-block';
+        }
+
+        function downloadQR() {
+            const canvas = document.querySelector('#qrcode canvas');
+            if (!canvas) return;
+
+            const a = document.createElement('a');
+            a.download = 'qrcode.png';
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+        }
+
+        // Initialize
+        document.getElementById('size').addEventListener('input', (e) => {
+            document.getElementById('sizeValue').textContent = `${e.target.value} x ${e.target.value}`;
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'theme-skyblue';
+            document.body.className = savedTheme;
+        });
+    </script>
+</body>
+</html>

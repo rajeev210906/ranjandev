@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Import main styles */
+        @import url('../styles.css');
+
+        /* Additional project-specific styles */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .project-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .project-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .project-info {
+            flex: 1;
+        }
+
+        .project-stats {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            text-align: center;
+            padding: 20px;
+            color: #ef4444;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .project-links a {
+            padding: 8px 15px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .project-links a:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body class="theme-skyblue">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="../index.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 style="text-align: center; margin: 40px 0;">My GitHub Projects</h1>
+        <div id="projects-container">
+            <div class="loading">
+                <i class="fas fa-spinner"></i>
+                <p>Loading projects...</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const GITHUB_USERNAME = 'ranjanlive'; // Replace with your GitHub username
+        const EXCLUDED_REPOS = ['ranjanlive']; // Repos to exclude from display
+
+        async function fetchProjects() {
+            try {
+                const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated`);
+                if (!response.ok) throw new Error('Failed to fetch projects');
+                
+                const repos = await response.json();
+                const container = document.getElementById('projects-container');
+                
+                if (repos.length === 0) {
+                    container.innerHTML = '<div class="error">No repositories found</div>';
+                    return;
+                }
+
+                const filteredRepos = repos.filter(repo => !EXCLUDED_REPOS.includes(repo.name));
+                
+                container.innerHTML = `
+                    <div class="projects-grid">
+                        ${filteredRepos.map(repo => `
+                            <div class="project-card">
+                                <div class="project-info">
+                                    <h3>${repo.name}</h3>
+                                    <p>${repo.description || 'No description available'}</p>
+                                    
+                                    <div class="project-stats">
+                                        <div class="stat">
+                                            <i class="fas fa-star"></i>
+                                            ${repo.stargazers_count}
+                                        </div>
+                                        <div class="stat">
+                                            <i class="fas fa-code-branch"></i>
+                                            ${repo.forks_count}
+                                        </div>
+                                        <div class="stat">
+                                            <i class="fas fa-circle"></i>
+                                            ${repo.language || 'None'}
+                                        </div>
+                                    </div>
+
+                                    ${repo.topics && repo.topics.length > 0 ? `
+                                        <div class="project-tags">
+                                            ${repo.topics.map(topic => `
+                                                <span class="tag">${topic}</span>
+                                            `).join('')}
+                                        </div>
+                                    ` : ''}
+                                </div>
+
+                                <div class="project-links">
+                                    <a href="${repo.html_url}" target="_blank">
+                                        <i class="fab fa-github"></i> View Code
+                                    </a>
+                                    ${repo.homepage ? `
+                                        <a href="${repo.homepage}" target="_blank">
+                                            <i class="fas fa-external-link-alt"></i> Live Demo
+                                        </a>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('projects-container').innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Failed to load projects. Please try again later.
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'theme-skyblue';
+            document.body.className = savedTheme;
+            fetchProjects();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Maker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .certificate-maker {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .controls {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid var(--accent-color);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn.download {
+            background: #22c55e;
+        }
+
+        .certificate-preview {
+            background: white;
+            width: 100%;
+            aspect-ratio: 1.414/1; /* A4 ratio */
+            margin: 20px 0;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .certificate {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #333;
+        }
+
+        .certificate-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2196f3;
+        }
+
+        .certificate-content {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .certificate-name {
+            font-size: 2em;
+            margin: 20px 0;
+            color: #1976d2;
+            font-family: cursive;
+        }
+
+        .certificate-date {
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        .template-select {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .template-option {
+            border: 2px solid var(--accent-color);
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .template-option.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        @media print {
+            .controls, .btn, .navbar {
+                display: none;
+            }
+            .certificate-preview {
+                box-shadow: none;
+                margin: 0;
+                border-radius: 0;
+            }
+        }
+
+        .signature-styles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .signature-option {
+            padding: 10px;
+            border: 1px solid var(--accent-color);
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            font-family: var(--signature-font);
+        }
+
+        .signature-option:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .org-style-1 {
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .org-style-2 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .org-style-3 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .logo-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin: 10px 0;
+        }
+
+        .optional-field {
+            opacity: 0.7;
+        }
+
+        .optional-field:focus {
+            opacity: 1;
+        }
+
+        .certificate.classic .certificate-org {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            color: #1976d2;
+        }
+
+        .certificate.modern .certificate-org {
+            font-size: 2em;
+            color: #2196f3;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .certificate.elegant .certificate-org {
+            font-size: 2.5em;
+            color: #0d47a1;
+            font-style: italic;
+        }
+
+        .signature-area {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        .signature-block {
+            text-align: center;
+        }
+
+        .signature-line {
+            width: 200px;
+            border-top: 2px solid #333;
+            margin: 10px auto;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Dancing+Script:wght@700&family=Great+Vibes&family=Montserrat:wght@600&family=Playfair+Display:ital@1&display=swap');
+    </style>
+</head>
+<body class="theme-skyblue">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="certificate-maker">
+            <h1 style="text-align: center; margin: 40px 0;">Certificate Maker</h1>
+            
+            <div class="controls">
+                <div class="template-select">
+                    <div class="template-option active" onclick="selectTemplate('classic')">Classic</div>
+                    <div class="template-option" onclick="selectTemplate('modern')">Modern</div>
+                    <div class="template-option" onclick="selectTemplate('elegant')">Elegant</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Organization Name (Optional)</label>
+                    <input type="text" id="orgName" placeholder="Enter organization name" oninput="updateCertificate()">
+                    <div class="template-select">
+                        <div class="template-option active" onclick="setOrgStyle('org-style-1')">Style 1</div>
+                        <div class="template-option" onclick="setOrgStyle('org-style-2')">Style 2</div>
+                        <div class="template-option" onclick="setOrgStyle('org-style-3')">Style 3</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Organization Logo (Optional)</label>
+                    <input type="file" id="logoUpload" accept="image/*" onchange="previewLogo(event)">
+                    <img id="logoPreview" class="logo-preview" style="display: none;">
+                </div>
+
+                <div class="form-group">
+                    <label>Recipient Name</label>
+                    <input type="text" id="name" placeholder="Enter name" oninput="updateCertificate()">
+                </div>
+
+                <div class="form-group">
+                    <label>Achievement/Course</label>
+                    <input type="text" id="achievement" placeholder="Enter achievement" oninput="updateCertificate()">
+                </div>
+
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="date" oninput="updateCertificate()">
+                </div>
+
+                <div class="form-group">
+                    <label>Custom Message</label>
+                    <textarea id="message" rows="3" oninput="updateCertificate()" 
+                        placeholder="Enter custom message"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Signature Style</label>
+                    <div class="signature-styles">
+                        <div class="signature-option" style="font-family: 'Dancing Script'" onclick="setSignature(0)">
+                            John Doe
+                        </div>
+                        <div class="signature-option" style="font-family: 'Great Vibes'" onclick="setSignature(1)">
+                            John Doe
+                        </div>
+                        <div class="signature-option" style="font-family: 'Playfair Display'" onclick="setSignature(2)">
+                            John Doe
+                        </div>
+                    </div>
+                    <input type="text" id="signatureName" class="optional-field" 
+                        placeholder="Enter signature name (optional)" oninput="updateCertificate()">
+                    <input type="text" id="signatureTitle" class="optional-field" 
+                        placeholder="Enter title/position (optional)" oninput="updateCertificate()">
+                </div>
+
+                <div class="form-group">
+                    <label>Certificate ID/Credentials (Optional)</label>
+                    <input type="text" id="certId" class="optional-field" 
+                        placeholder="Enter certificate ID or credentials" oninput="updateCertificate()">
+                </div>
+
+                <button class="btn download" onclick="downloadCertificate()">
+                    <i class="fas fa-download"></i> Download Certificate
+                </button>
+                <button class="btn" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Certificate
+                </button>
+            </div>
+
+            <div class="certificate-preview">
+                <div class="certificate" id="certificate">
+                    <img id="certLogo" style="max-height: 80px; margin-bottom: 20px; display: none;">
+                    <div class="certificate-org" id="certOrg"></div>
+                    <h1 class="certificate-title">Certificate of Achievement</h1>
+                    <div class="certificate-content">
+                        This is to certify that
+                        <div class="certificate-name" id="certName">Name</div>
+                        has successfully completed
+                        <div id="certAchievement">Achievement</div>
+                        <div id="certMessage">Message</div>
+                        <div class="certificate-date" id="certDate">Date</div>
+                    </div>
+                    <div class="signature-area">
+                        <div class="signature-block">
+                            <div id="signatureText" style="font-family: 'Dancing Script', cursive; font-size: 1.8em;"></div>
+                            <div class="signature-line"></div>
+                            <div id="signatureTitle" style="font-size: 1em; color: #666;"></div>
+                        </div>
+                    </div>
+                    <div id="certCredentials" style="margin-top: 20px; font-size: 0.8em; color: #666;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTemplate = 'classic';
+        let currentOrgStyle = 'org-style-1';
+        let currentSignatureStyle = 'Dancing Script';
+
+        function updateCertificate() {
+            document.getElementById('certName').textContent = 
+                document.getElementById('name').value || 'Name';
+            
+            document.getElementById('certAchievement').textContent = 
+                document.getElementById('achievement').value || 'Achievement';
+            
+            document.getElementById('certMessage').textContent = 
+                document.getElementById('message').value;
+            
+            const date = document.getElementById('date').value;
+            document.getElementById('certDate').textContent = 
+                date ? new Date(date).toLocaleDateString('en-US', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }) : 'Date';
+
+            // Update organization
+            const orgName = document.getElementById('orgName').value;
+            const certOrg = document.getElementById('certOrg');
+            certOrg.textContent = orgName;
+            certOrg.className = `certificate-org ${currentOrgStyle}`;
+            
+            // Update signature
+            const sigName = document.getElementById('signatureName').value || 'John Doe';
+            const sigTitle = document.getElementById('signatureTitle').value;
+            document.getElementById('signatureText').textContent = sigName;
+            document.getElementById('signatureTitle').textContent = sigTitle;
+            
+            // Update credentials
+            const credentials = document.getElementById('certId').value;
+            document.getElementById('certCredentials').textContent = credentials;
+        }
+
+        function selectTemplate(template) {
+            currentTemplate = template;
+            document.querySelectorAll('.template-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const certificate = document.getElementById('certificate');
+            certificate.className = 'certificate ' + template;
+
+            // Apply template-specific styles
+            switch(template) {
+                case 'modern':
+                    certificate.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+                    break;
+                case 'elegant':
+                    certificate.style.background = 'linear-gradient(to right, #fff1eb 0%, #ace0f9 100%)';
+                    break;
+                default: // classic
+                    certificate.style.background = 'white';
+                    break;
+            }
+        }
+
+        function setOrgStyle(style) {
+            currentOrgStyle = style;
+            document.querySelectorAll('.template-select .template-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            updateCertificate();
+        }
+
+        function setSignature(index) {
+            const fonts = ['Dancing Script', 'Great Vibes', 'Playfair Display'];
+            currentSignatureStyle = fonts[index];
+            document.getElementById('signatureText').style.fontFamily = currentSignatureStyle;
+            updateCertificate();
+        }
+
+        function previewLogo(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('logoPreview');
+                    const certLogo = document.getElementById('certLogo');
+                    preview.src = e.target.result;
+                    certLogo.src = e.target.result;
+                    preview.style.display = 'block';
+                    certLogo.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function downloadCertificate() {
+            // Note: This is a placeholder. In a real implementation,
+            // you would use html2canvas or similar library to convert to image
+            alert('In a real implementation, this would download the certificate as an image or PDF');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'theme-skyblue';
+            document.body.className = savedTheme;
+            updateCertificate();
+        });
+    </script>
+</body>
+</html>

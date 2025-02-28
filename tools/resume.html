@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .resume-builder {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid var(--accent-color);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .btn-add {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .entry {
+            background: var(--bg-primary);
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .delete-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .preview {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+            .preview {
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body class="theme-skyblue">
+    <nav class="navbar no-print">
+        <div class="nav-brand">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="resume-builder">
+            <h1 class="no-print" style="text-align: center; margin: 40px 0;">Resume Builder</h1>
+            
+            <div class="section no-print">
+                <h2>Personal Information</h2>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="fullName" oninput="updateResume()">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" oninput="updateResume()">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone" oninput="updateResume()">
+                </div>
+            </div>
+
+            <div class="section no-print">
+                <h2>Education</h2>
+                <div id="educationList"></div>
+                <button class="btn-add" onclick="addEducation()">
+                    <i class="fas fa-plus"></i> Add Education
+                </button>
+            </div>
+
+            <div class="section no-print">
+                <h2>Experience</h2>
+                <div id="experienceList"></div>
+                <button class="btn-add" onclick="addExperience()">
+                    <i class="fas fa-plus"></i> Add Experience
+                </button>
+            </div>
+
+            <div class="section no-print">
+                <h2>Skills</h2>
+                <div class="form-group">
+                    <label>Skills (comma separated)</label>
+                    <textarea id="skills" oninput="updateResume()"></textarea>
+                </div>
+            </div>
+
+            <button class="btn-add no-print" onclick="window.print()">
+                <i class="fas fa-print"></i> Print Resume
+            </button>
+
+            <div class="preview" id="resumePreview">
+                <!-- Resume preview will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let educationEntries = [];
+        let experienceEntries = [];
+
+        function addEducation() {
+            const entry = {
+                school: '',
+                degree: '',
+                year: ''
+            };
+            educationEntries.push(entry);
+            updateEducationList();
+        }
+
+        function addExperience() {
+            const entry = {
+                company: '',
+                position: '',
+                duration: '',
+                description: ''
+            };
+            experienceEntries.push(entry);
+            updateExperienceList();
+        }
+
+        function updateEducationList() {
+            const list = document.getElementById('educationList');
+            list.innerHTML = educationEntries.map((entry, index) => `
+                <div class="entry">
+                    <button class="delete-btn" onclick="deleteEducation(${index})">×</button>
+                    <div class="form-group">
+                        <label>School/University</label>
+                        <input type="text" value="${entry.school}" 
+                               onchange="updateEducationEntry(${index}, 'school', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Degree</label>
+                        <input type="text" value="${entry.degree}"
+                               onchange="updateEducationEntry(${index}, 'degree', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="text" value="${entry.year}"
+                               onchange="updateEducationEntry(${index}, 'year', this.value)">
+                    </div>
+                </div>
+            `).join('');
+            updateResume();
+        }
+
+        function updateExperienceList() {
+            const list = document.getElementById('experienceList');
+            list.innerHTML = experienceEntries.map((entry, index) => `
+                <div class="entry">
+                    <button class="delete-btn" onclick="deleteExperience(${index})">×</button>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" value="${entry.company}"
+                               onchange="updateExperienceEntry(${index}, 'company', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Position</label>
+                        <input type="text" value="${entry.position}"
+                               onchange="updateExperienceEntry(${index}, 'position', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input type="text" value="${entry.duration}"
+                               onchange="updateExperienceEntry(${index}, 'duration', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea onchange="updateExperienceEntry(${index}, 'description', this.value)"
+                        >${entry.description}</textarea>
+                    </div>
+                </div>
+            `).join('');
+            updateResume();
+        }
+
+        function updateEducationEntry(index, field, value) {
+            educationEntries[index][field] = value;
+            updateResume();
+        }
+
+        function updateExperienceEntry(index, field, value) {
+            experienceEntries[index][field] = value;
+            updateResume();
+        }
+
+        function deleteEducation(index) {
+            educationEntries.splice(index, 1);
+            updateEducationList();
+        }
+
+        function deleteExperience(index) {
+            experienceEntries.splice(index, 1);
+            updateExperienceList();
+        }
+
+        function updateResume() {
+            const preview = document.getElementById('resumePreview');
+            preview.innerHTML = `
+                <h1 style="text-align: center; color: #2196f3; margin-bottom: 20px;">
+                    ${document.getElementById('fullName').value || 'Your Name'}
+                </h1>
+                <p style="text-align: center; margin-bottom: 20px;">
+                    ${document.getElementById('email').value || 'email@example.com'} | 
+                    ${document.getElementById('phone').value || 'Phone Number'}
+                </p>
+
+                <h2 style="color: #2196f3; border-bottom: 2px solid #2196f3; padding-bottom: 5px; margin: 20px 0;">
+                    Education
+                </h2>
+                ${educationEntries.map(edu => `
+                    <div style="margin-bottom: 15px;">
+                        <h3>${edu.school}</h3>
+                        <p>${edu.degree}</p>
+                        <p>${edu.year}</p>
+                    </div>
+                `).join('')}
+
+                <h2 style="color: #2196f3; border-bottom: 2px solid #2196f3; padding-bottom: 5px; margin: 20px 0;">
+                    Experience
+                </h2>
+                ${experienceEntries.map(exp => `
+                    <div style="margin-bottom: 15px;">
+                        <h3>${exp.company}</h3>
+                        <p><strong>${exp.position}</strong> | ${exp.duration}</p>
+                        <p>${exp.description}</p>
+                    </div>
+                `).join('')}
+
+                <h2 style="color: #2196f3; border-bottom: 2px solid #2196f3; padding-bottom: 5px; margin: 20px 0;">
+                    Skills
+                </h2>
+                <p>${document.getElementById('skills').value || 'List your skills here'}</p>
+            `;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'theme-skyblue';
+            document.body.className = savedTheme;
+            updateResume();
+        });
+    </script>
+</body>
+</html>

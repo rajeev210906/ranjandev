@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started with Web Development - Blog Post</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('../../styles.css');
+
+        .post-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .post-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .post-meta {
+            color: var(--text-secondary);
+            margin: 20px 0;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .post-content {
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .post-content h2 {
+            margin: 30px 0 15px;
+        }
+
+        .post-content p {
+            margin-bottom: 20px;
+        }
+
+        .post-content code {
+            background: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--bg-secondary);
+        }
+
+        .nav-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body class="theme-skyblue">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="../index.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-arrow-left"></i> Back to Blog
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <article class="post-container">
+            <header class="post-header">
+                <h1>Getting Started with Web Development</h1>
+                <div class="post-meta">
+                    <span><i class="far fa-calendar"></i> January 15, 2024</span>
+                    <span><i class="far fa-clock"></i> 5 min read</span>
+                    <span><i class="fas fa-tag"></i> Web Development</span>
+                </div>
+                <img src="../../images/blog/web-dev.jpg" alt="Web Development" class="post-image">
+            </header>
+
+            <div class="post-content">
+                <h2>Introduction to Web Development</h2>
+                <p>
+                    Web development is the foundation of the modern internet. Whether you're looking to build a career
+                    or just want to create your own website, understanding the basics is crucial. In this guide,
+                    we'll cover the essential components and how to get started.
+                </p>
+
+                <h2>1. HTML - The Structure</h2>
+                <p>
+                    HTML (HyperText Markup Language) is the backbone of any webpage. It provides the basic structure
+                    and content. Here's a simple example:
+                </p>
+                <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My First Webpage&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Hello, World!&lt;/h1&gt;
+        &lt;p&gt;This is my first webpage.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+                </code></pre>
+
+                <h2>2. CSS - The Style</h2>
+                <p>
+                    CSS (Cascading Style Sheets) is used to style your HTML elements. It controls layout, colors,
+                    fonts, and more. Here's a basic example:
+                </p>
+                <pre><code>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f2f5;
+}
+
+h1 {
+    color: #1976d2;
+    text-align: center;
+}
+                </code></pre>
+
+                <h2>3. JavaScript - The Functionality</h2>
+                <p>
+                    JavaScript adds interactivity to your website. It can respond to user actions, modify content,
+                    and communicate with servers. Here's a simple example:
+                </p>
+                <pre><code>
+document.getElementById('button').addEventListener('click', function() {
+    alert('Hello, World!');
+});
+                </code></pre>
+
+                <h2>Essential Tools for Web Development</h2>
+                <ul>
+                    <li><strong>Text Editor:</strong> VS Code, Sublime Text, or Atom</li>
+                    <li><strong>Browser:</strong> Chrome with DevTools</li>
+                    <li><strong>Version Control:</strong> Git and GitHub</li>
+                    <li><strong>Terminal:</strong> Command line basics</li>
+                </ul>
+
+                <h2>Next Steps</h2>
+                <p>
+                    Once you're comfortable with the basics, you can explore:
+                </p>
+                <ul>
+                    <li>Responsive Design</li>
+                    <li>CSS Frameworks (Bootstrap, Tailwind)</li>
+                    <li>JavaScript Frameworks (React, Vue)</li>
+                    <li>Backend Development (Node.js, Python)</li>
+                    <li>Databases (MySQL, MongoDB)</li>
+                </ul>
+
+                <div class="post-navigation">
+                    <a href="#" class="nav-link" style="visibility: hidden;">
+                        <i class="fas fa-arrow-left"></i> Previous Post
+                    </a>
+                    <a href="post-2.html" class="nav-link">
+                        Next Post: Building a Portfolio Website
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'theme-skyblue';
+            document.body.className = savedTheme;
+
+            // Add syntax highlighting to code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                block.innerHTML = block.innerHTML.trim()
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            });
+        });
+    </script>
+</body>
+</html>

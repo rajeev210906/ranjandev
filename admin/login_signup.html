@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Login & Signup</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --accent-primary: #3b82f6;
+            --accent-hover: #2563eb;
+            --error: #ef4444;
+            --border: #334155;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 350px;
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        h2 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.75rem 0;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+        
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 0.75rem;
+            transition: background 0.2s;
+        }
+        
+        button:hover {
+            background: var(--accent-hover);
+        }
+        
+        .toggle-btn {
+            background: none;
+            color: var(--accent-primary);
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .toggle-btn:hover {
+            text-decoration: underline;
+            background: none;
+        }
+        
+        #message {
+            margin-top: 1rem;
+            color: var(--error);
+            font-size: 0.9rem;
+        }
+        
+        .logo {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: var(--accent-primary);
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+                max-width: 350px;
+                padding: 1.5rem;
+                border-radius: 8px;
+            }
+            
+            input, button {
+                padding: 0.75rem;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+        }
+        
+        /* Handle viewport height issues on mobile */
+        @media (max-height: 600px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                padding: 2rem 0;
+            }
+        }
+        
+        /* Active states for touch */
+        button:active {
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-cloud"></i>
+        </div>
+        
+        <h2 id="form-title">Login</h2>
+        <form id="login-form">
+            <input type="email" id="login-email" placeholder="Email" required autocomplete="email">
+            <input type="password" id="login-password" placeholder="Password" required autocomplete="current-password">
+            <button type="submit">Login</button>
+            <button type="button" class="toggle-btn" onclick="toggleForm()">Don't have an account? Signup</button>
+        </form>
+        
+        <form id="signup-form" style="display: none;">
+            <input type="text" id="signup-name" placeholder="Full Name" required autocomplete="name">
+            <input type="email" id="signup-email" placeholder="Email" required autocomplete="email">
+            <input type="password" id="signup-password" placeholder="Password" required autocomplete="new-password">
+            <button type="submit">Signup</button>
+            <button type="button" class="toggle-btn" onclick="toggleForm()">Already have an account? Login</button>
+        </form>
+        
+        <div id="message" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="api.js"></script>
+    <script>
+        function toggleForm() {
+            let loginForm = document.getElementById("login-form");
+            let signupForm = document.getElementById("signup-form");
+            let title = document.getElementById("form-title");
+            
+            if (loginForm.style.display === "none") {
+                loginForm.style.display = "block";
+                signupForm.style.display = "none";
+                title.innerText = "Login";
+            } else {
+                loginForm.style.display = "none";
+                signupForm.style.display = "block";
+                title.innerText = "Signup";
+            }
+            
+            // Clear any displayed messages
+            document.getElementById('message').style.display = 'none';
+        }
+        
+        function showError(message) {
+            const messageElement = document.getElementById('message');
+            messageElement.textContent = message;
+            messageElement.style.display = 'block';
+        }
+        
+        // Check if user is already logged in
+        window.onload = function() {
+            if (SessionManager.isLoggedIn()) {
+                redirectToDashboard();
+            }
+        };
+        
+        // Login form submission
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            try {
+                await AuthAPI.login(email, password);
+                redirectToDashboard();
+            } catch (error) {
+                showError(error.message || 'Login failed. Please check your credentials.');
+            }
+        });
+        
+        // Signup form submission
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            
+            try {
+                await AuthAPI.signup(name, email, password);
+                redirectToDashboard();
+            } catch (error) {
+                showError(error.message || 'Signup failed. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
