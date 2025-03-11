@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>eduDrive - Premium Courses at Affordable Prices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --success: #4ade80;
+            --warning: #fbbf24;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 0.8rem auto;
+            border-radius: 2px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .how-it-works {
+            background-color: #f0f4f8;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            counter-reset: step;
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            width: 280px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .step-card::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .category-img {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .category-content {
+            padding: 1.5rem;
+        }
+        
+        .category-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-count {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .cta {
+            text-align: center;
+            margin: 4rem 0;
+        }
+        
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        /* Improved responsive styles */
+        @media (max-width: 992px) {
+            .container {
+                padding: 3rem 1.5rem;
+            }
+            
+            .features {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .steps {
+                gap: 3rem 1rem;
+            }
+            
+            .step-card {
+                width: 230px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            header {
+                flex-direction: column;
+                padding: 0.8rem 1rem;
+                align-items: stretch;
+            }
+            
+            .logo-container {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            nav {
+                width: 100%;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            nav ul.show {
+                max-height: 300px;
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                width: 100%;
+                margin: 0;
+            }
+            
+            nav a {
+                display: block;
+                padding: 0.8rem 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .hero {
+                padding: 3rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+            
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+            
+            .feature-title {
+                font-size: 1.2rem;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .cta h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .btn {
+                padding: 0.8rem 2.5rem; /* Larger touch target */
+            }
+            
+            .feature-card:hover, .category-card:hover {
+                transform: none; /* Disable hover effects on touch devices */
+                box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            }
+            
+            .category-card {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* Tablet-specific optimizations */
+        @media (min-width: 601px) and (max-width: 992px) {
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .step-card {
+                width: 45%;
+                min-width: 200px;
+            }
+        }
+        
+        /* Landscape mode optimization for phones */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                padding: 1.5rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .hero p {
+                margin-bottom: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .how-it-works {
+                padding: 1.5rem 1rem;
+                margin: 1.5rem 0;
+            }
+            
+            .steps {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .step-card {
+                width: calc(50% - 1rem);
+                padding: 1.5rem;
+                min-height: 120px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #343a40;
+            font-size: 0.9rem;
+            color: #adb5bd;
+        }
+        
+        /* Improve dark mode for mobile */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #f0f0f0;
+            }
+            
+            .feature-card, .step-card, .category-card {
+                background-color: #2a2a2a;
+                color: #f0f0f0;
+            }
+            
+            .how-it-works {
+                background-color: #1a1a1a;
+            }
+            
+            .btn {
+                background-color: var(--accent);
+                color: #121212;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i> eduDrive
+            </div>
+            <button class="mobile-menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav>
+            <ul id="mobileNav">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="./Courses.html">Courses</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Premium Courses at Affordable Prices</h1>
+        <p>Access high-quality educational content offline at a fraction of the original cost. eduDrive brings premium courses directly to your computer without requiring internet access.</p>
+        <a href="./Courses.html" class="btn">Explore Courses</a>
+    </section>
+
+    <div class="container">
+        <section id="features">
+            <h2 class="section-title">Why Choose eduDrive?</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-coins"></i></div>
+                    <h3 class="feature-title">Affordable Pricing</h3>
+                    <p>We distribute course costs among multiple users, making premium education accessible at significantly lower prices.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-wifi-slash"></i></div>
+                    <h3 class="feature-title">100% Offline Access</h3>
+                    <p>Once installed, our courses work completely offline - no internet required for streaming or accessing content.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="feature-title">Secure Platform</h3>
+                    <p>Our encrypted technology ensures your course content remains secure and accessible only on your device.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How eduDrive Works</h2>
+            <div class="steps">
+                <div class="step-card">
+                    <h3>Browse & Select</h3>
+                    <p>Browse our extensive catalog and select the courses you're interested in purchasing.</p>
+                </div>
+                <div class="step-card">
+                    <h3>Schedule Meeting</h3>
+                    <p>Our representative will schedule a meeting at your convenient time and location.</p>
+                </div>
+                <div class="step-card">
+                    <h3>Installation</h3>
+                    <p>We'll install the eduDrive portal on your laptop and copy all course materials.</p>
+                </div>
+                <div class="step-card">
+                    <h3>Payment & Access</h3>
+                    <p>Make the payment and instantly get full lifetime access to all your purchased courses.</p>
+                </div>
+                <br>
+                <style>
+                    .caution {
+                        background-color: #fff3cd;
+                        border-left: 4px solid #ffc107;
+                        padding: 1.5rem;
+                        margin: 2rem auto;
+                        max-width: 800px;
+                        border-radius: 4px;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                    }
+
+                    .caution p {
+                        color: #856404;
+                        font-size: 0.95rem;
+                        margin: 0;
+                        line-height: 1.6;
+                    }
+
+                    @media (prefers-color-scheme: dark) {
+                        .caution {
+                            background-color: #2c2815;
+                            border-left-color: #856404;
+                        }
+                        .caution p {
+                            color: #ffd966;
+                        }
+                    }
+                </style>
+
+                <div class="caution">
+                    <p>This platform is a reselling portal designed to make high-cost courses more accessible. We understand that not everyone can afford these expensive courses, so we purchase them and share the costs among multiple users, ensuring affordability for all.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container">
+        <section id="categories">
+            <h2 class="section-title">Popular Categories</h2>
+            <div class="categories">
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1607706189992-eae578626c86?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Web Development</h3>
+                        <p class="category-count">5+ Courses</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Data Science</h3>
+                        <p class="category-count">2+ Courses</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1516110833967-0b5716ca1387?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Mobile App Development</h3>
+                        <p class="category-count">Comming Soon..</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Digital Marketing</h3>
+                        <p class="category-count">Upcomming..</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="cta">
+            <h2>Ready to Start Learning?</h2>
+            <p>Browse our course catalog and discover premium educational content at affordable prices. Our collection is constantly updated with the latest courses.</p>
+            <a href="./Courses.html" class="btn">Explore Courses</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3><span style="color: var(--primary);">edu</span>Drive</h3>
+                <p>Advanced secure course delivery platform for educators worldwide.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="./courses.html">Courses</a></li>
+                    <!-- <li><a href="#contact">Contact</a></li> -->
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 eduDrive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile navigation toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileNav.classList.toggle('show');
+                const icon = menuToggle.querySelector('i');
+                if (mobileNav.classList.contains('show')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    // Close mobile menu when clicking a link
+                    if (mobileNav.classList.contains('show')) {
+                        mobileNav.classList.remove('show');
+                        menuToggle.querySelector('i').classList.remove('fa-times');
+                        menuToggle.querySelector('i').classList.add('fa-bars');
+                    }
+                    
+                    // Scroll to the target
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Improve touch feedback for buttons
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                button.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 100);
+                });
+            });
+            
+            // Lazy load category images
+            if ('IntersectionObserver' in window) {
+                const imgOptions = {
+                    rootMargin: '0px 0px 50px 0px',
+                    threshold: 0.1
+                };
+                
+                const categoryImgs = document.querySelectorAll('.category-img');
+                const imgObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const bgUrl = entry.target.style.backgroundImage;
+                            if (bgUrl.includes('unsplash.com')) {
+                                const newUrl = bgUrl.replace('w=500', 'w=' + 
+                                    (window.innerWidth < 768 ? 400 : 500));
+                                entry.target.style.backgroundImage = newUrl;
+                            }
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, imgOptions);
+                
+                categoryImgs.forEach(img => {
+                    imgObserver.observe(img);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "title": "Complete Web Development - DELTA",
+        "description": "Learn Web Development from scratch with this comprehensive course. Master front-end and back-end technologies including HTML, CSS, JavaScript, React, Node.js, and MongoDB. Build responsive websites and full-stack web applications.",
+        "image": "https://lwfiles.mycourse.app/62a6cd5e1e9e2fbf212d608d-public/baa2f0a94a964dc64393d902a7a2bdef.jpg",
+        "originalPrice": 4500,
+        "discountedPrice": 350
+    },
+    {
+        "id": 2,
+        "title": "Java with DSA - ALPHA ",
+        "description": "Learn Java programming and Data Structures & Algorithms from scratch. Master Java syntax, OOP concepts, and DSA topics including arrays, linked lists, stacks, queues, trees, graphs, and sorting algorithms.",
+        "image": "https://lwfiles.mycourse.app/62a6cd5e1e9e2fbf212d608d-public/d9bd3d3072e7df86be3f00f545c83514.jpeg",
+        "originalPrice": 5599,
+        "discountedPrice": 499
+    },
+    {
+        "id": 3,
+        "title": "C++ With DSA ",
+        "description": " Learn C++ programming and Data Structures & Algorithms from scratch. Master C++ syntax, OOP concepts, and DSA topics including arrays, linked lists, stacks, queues, trees, graphs, and sorting algorithms.",
+        "image": "https://lwfiles.mycourse.app/62a6cd5e1e9e2fbf212d608d-public/77762a4186facc042a8aae0c392a9558.png",
+        "originalPrice": 5499,
+        "discountedPrice": 399
+    },
+    {
+        "id": 4,
+        "title": "Data Science & Analytics",
+        "description": "Master data analysis techniques using Python, SQL, and visualization tools. Learn statistical methods, data cleaning, exploratory data analysis, and how to communicate insights effectively to drive business decisions.",
+        "image": "https://s3.ap-south-1.amazonaws.com/cdn.pwskills.com/assets/uploads/ogTag/29d77884-6236-4eb2-8683-676e39c847f5.jpeg",
+        "originalPrice": 17999,
+        "discountedPrice": 1499
+    },
+    {
+        "id": 5,
+        "title": "GATE - CSE & IT",
+        "description": "Prepare for the GATE Computer Science & Information Technology exam with this comprehensive course. Cover the entire GATE syllabus, practice with previous year papers, and get expert guidance from top educators.",
+        "image": "https://static.pw.live/5eb393ee95fab7468a79d189/ADMIN/30dfecf1-c016-4b07-9f8f-9f08b4184f5e.png",
+        "originalPrice": 13100,
+        "discountedPrice": 1310
+    }
+]

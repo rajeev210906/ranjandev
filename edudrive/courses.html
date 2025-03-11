@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>eduDrive - Available Courses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --background: #f0f4f8;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--card-shadow);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px var(--card-shadow);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 0.8rem auto;
+            border-radius: 2px;
+        }
+        
+        /* Filter section */
+        .filter-section {
+            padding: 1.5rem 0;
+            background-color: var(--background);
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px var(--card-shadow);
+        }
+        
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .search-box {
+            display: flex;
+            flex-grow: 1;
+            max-width: 500px;
+        }
+        
+        .search-box input {
+            flex-grow: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .search-box button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.2rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .sort-box {
+            display: flex;
+            align-items: center;
+        }
+        
+        .sort-box select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+        
+        /* Courses grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .course-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--card-shadow);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--card-shadow);
+        }
+        
+        .course-image {
+            height: 200px;
+            position: relative;
+        }
+        
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .course-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .course-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .course-desc {
+            color: #6c757d;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .course-price {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .discount-price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal-backdrop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px var(--card-shadow);
+            transform: translateY(-20px);
+            transition: all 0.3s;
+        }
+        
+        .modal-backdrop.show .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        
+        /* Course detail styles */
+        .course-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .course-details-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .course-details-image img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        
+        .course-details-info {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .course-details-price {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+        }
+        
+        .features-list {
+            margin-left: 1.5rem;
+        }
+        
+        .features-list li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+                font-size: 0.9rem;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                max-width: none;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Utils */
+        .text-center { text-align: center; }
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced Mobile Navigation */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        /* Improved responsive styles */
+        @media (max-width: 992px) {
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .course-details {
+                flex-direction: column;
+            }
+            
+            .course-details-image {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            header {
+                flex-direction: column;
+                padding: 0.8rem 1rem;
+            }
+            
+            header .logo-container {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            nav {
+                width: 100%;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            nav ul.show {
+                max-height: 300px;
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                width: 100%;
+                margin: 0;
+            }
+            
+            nav a {
+                display: block;
+                padding: 0.8rem 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            nav a.btn {
+                margin: 0.5rem 0;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            
+            .search-box {
+                max-width: none;
+            }
+            
+            .sort-box {
+                width: 100%;
+            }
+            
+            .sort-box select {
+                width: 100%;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .course-card {
+                margin-bottom: 1rem;
+            }
+            
+            .hero {
+                padding: 3rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 0.5rem;
+            }
+            
+            .modal-header, .modal-body, .modal-footer {
+                padding: 1rem;
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .btn, button {
+                padding: 0.8rem 1.5rem; /* Larger touch targets */
+            }
+            
+            select, input {
+                font-size: 16px; /* Prevents zoom on iOS */
+                height: 44px; /* Minimum recommended touch target size */
+            }
+            
+            .course-card {
+                margin-bottom: 1rem;
+            }
+            
+            .course-footer {
+                padding-top: 0.5rem;
+            }
+            
+            .modal-close {
+                font-size: 2rem;
+                padding: 0.5rem;
+            }
+        }
+        
+        /* Tablet-specific optimizations */
+        @media (min-width: 601px) and (max-width: 992px) {
+            .courses-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .course-image {
+                height: 180px;
+            }
+        }
+        
+        /* Landscape mode optimization for phones */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                padding: 1.5rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .hero p {
+                margin-bottom: 1rem;
+            }
+            
+            .modal-content {
+                max-height: 85vh;
+            }
+        }
+        
+        /* Improve dark mode for mobile */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #f0f0f0;
+            }
+            
+            input, select, .course-card, .modal-content, .container, .filter-section {
+                background-color: #2a2a2a;
+                color: #f0f0f0;
+            }
+            
+            .sort-box select, .search-box input {
+                border-color: #444;
+                color: #f0f0f0;
+                background-color: #333;
+            }
+            
+            .hero {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            }
+            
+            footer {
+                background-color: #1a1a1a;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i> eduDrive
+            </div>
+            <button class="mobile-menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav>
+            <ul id="mobileNav">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="#" class="active">Courses</a></li>
+                <!-- <li><a href="index.html#contact">Contact</a></li> -->
+                <li><a href="index.html#get-started" class="btn">Get Started</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Premium eduDrive Courses</h1>
+        <p>Explore our selection of high-quality secure courses</p>
+    </section>
+
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-row">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search courses...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="sort-box">
+                    <select id="sortSelect">
+                        <option value="default">Sort By</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name">Name: A to Z</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div id="coursesContainer" class="courses-grid">
+            <!-- Courses will be loaded here dynamically -->
+            <div class="text-center" style="grid-column: 1 / -1">
+                <div class="spinner"></div>
+                <p>Loading courses...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background-color: var(--dark); color: white; padding: 2rem 0; margin-top: 3rem; border-radius: 8px; box-shadow: 0 4px 15px var(--card-shadow);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div>
+                    <h3><span style="color: var(--primary);">edu</span>Drive</h3>
+                    <p>Advanced secure course delivery platform for educators worldwide.</p>
+                </div>
+                <!-- <div>
+                    <h3>Quick Links</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="index.html#features" style="color: #adb5bd; text-decoration: none;">Features</a></li>
+                        <li><a href="index.html#how-it-works" style="color: #adb5bd; text-decoration: none;">How It Works</a></li>
+                        <li><a href="courses.html" style="color: #adb5bd; text-decoration: none;">Courses</a></li>
+                        <li><a href="index.html#contact" style="color: #adb5bd; text-decoration: none;">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Follow Us</h3>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" style="color: white;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: white;"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" style="color: white;"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div> -->
+            </div>
+            <div style="text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #343a40;">
+                <p>© 2025 eduDrive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Course Details -->
+    <div class="modal-backdrop" id="courseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Course Details</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Course details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="modalCloseBtn">Close</button>
+                <button class="btn" id="modalBuyBtn">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile navigation toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileNav.classList.toggle('show');
+                const icon = menuToggle.querySelector('i');
+                if (mobileNav.classList.contains('show')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Elements
+            const coursesContainer = document.getElementById('coursesContainer');
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const sortSelect = document.getElementById('sortSelect');
+            const courseModal = document.getElementById('courseModal');
+            const modalClose = document.getElementById('modalClose');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const modalBuyBtn = document.getElementById('modalBuyBtn');
+            
+            // Course data store
+            let allCourses = [];
+            
+            // Close modal function
+            function closeModal() {
+                courseModal.classList.remove('show');
+            }
+            
+            // Modal event listeners
+            modalClose.addEventListener('click', closeModal);
+            modalCloseBtn.addEventListener('click', closeModal);
+            courseModal.addEventListener('click', function(e) {
+                if (e.target === courseModal) closeModal();
+            });
+            
+            // Load courses from JSON file (or mock data if file doesn't exist)
+            fetch('./data/courses.json')
+                .then(response => response.json())
+                .then(data => {
+                    allCourses = data;
+                    displayCourses(allCourses);
+                })
+                .catch(error => {
+                    console.error('Error loading courses:', error);
+                    
+                    // Use mock data if fetch fails
+                    allCourses = [
+                        {
+                            id: 1,
+                            title: "Complete Web Development Bootcamp",
+                            description: "Learn HTML, CSS, JavaScript, React and Node.js in this comprehensive course. Build real-world projects and deploy them to the web.",
+                            originalPrice: 199,
+                            discountedPrice: 49,
+                            image: "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        },
+                        {
+                            id: 2,
+                            title: "Python for Data Science",
+                            description: "Master Python for data analysis, visualization and machine learning. Work with Pandas, NumPy, Matplotlib and Scikit-Learn.",
+                            originalPrice: 149,
+                            discountedPrice: 39,
+                            image: "https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        },
+                        {
+                            id: 3,
+                            title: "UI/UX Design Fundamentals",
+                            description: "Learn user interface and user experience design principles. Create wireframes, prototypes and design beautiful user interfaces.",
+                            originalPrice: 129,
+                            discountedPrice: 69,
+                            image: "https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        }
+                    ];
+                    
+                    displayCourses(allCourses);
+                });
+                
+            // Display courses function
+            function displayCourses(courses) {
+                coursesContainer.innerHTML = '';
+                
+                if (courses.length === 0) {
+                    coursesContainer.innerHTML = `
+                        <div class="text-center" style="grid-column: 1 / -1">
+                            <p>No courses found matching your criteria.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                courses.forEach(course => {
+                    const discountPercentage = Math.round((1 - (course.discountedPrice / course.originalPrice)) * 100);
+                    
+                    const courseCard = document.createElement('div');
+                    courseCard.className = 'course-card';
+                    courseCard.innerHTML = `
+                        <div class="course-image">
+                            <img src="${course.image}" alt="${course.title}">
+                            ${discountPercentage > 0 ? 
+                                `<span class="discount-badge">-${discountPercentage}%</span>` : 
+                                ''}
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">${course.title}</h3>
+                            <p class="course-desc">${
+                                course.description.length > 100 ? 
+                                course.description.substring(0, 100) + '...' : 
+                                course.description
+                            }</p>
+                            <div class="course-footer">
+                                <div class="course-price">
+                                    ${course.discountedPrice < course.originalPrice ? 
+                                        `<span class="original-price">₹${course.originalPrice}</span>` : 
+                                        ''}
+                                    <span class="discount-price">₹${course.discountedPrice}</span>
+                                </div>
+                                <button class="btn btn-outline view-details" data-id="${course.id}">View Details</button>
+                            </div>
+                        </div>
+                    `;
+                    coursesContainer.appendChild(courseCard);
+                });
+                
+                // Add event listeners to view details buttons
+                document.querySelectorAll('.view-details').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const courseId = parseInt(this.getAttribute('data-id'));
+                        const course = courses.find(c => c.id === courseId);
+                        showCourseDetails(course);
+                    });
+                });
+                
+                // Add additional empty columns for better grid layout on tablets
+                if (window.innerWidth > 600 && window.innerWidth < 992) {
+                    // Add empty elements to balance the grid on tablet view
+                    const remainder = courses.length % 2;
+                    if (remainder !== 0 && courses.length > 0) {
+                        for (let i = 0; i < 2 - remainder; i++) {
+                            const emptyCard = document.createElement('div');
+                            emptyCard.className = 'course-card';
+                            emptyCard.style.visibility = 'hidden';
+                            coursesContainer.appendChild(emptyCard);
+                        }
+                    }
+                }
+            }
+            
+            // Search functionality
+            function setupSearch() {
+                function performSearch() {
+                    const searchTerm = searchInput.value.trim().toLowerCase();
+                    if (!searchTerm) {
+                        displayCourses(allCourses);
+                        return;
+                    }
+                    
+                    const filteredCourses = allCourses.filter(course => 
+                        course.title.toLowerCase().includes(searchTerm) || 
+                        course.description.toLowerCase().includes(searchTerm)
+                    );
+                    
+                    displayCourses(filteredCourses);
+                }
+                
+                searchBtn.addEventListener('click', performSearch);
+                searchInput.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') performSearch();
+                });
+            }
+            
+            // Sort functionality
+            function setupSort() {
+                sortSelect.addEventListener('change', function() {
+                    const sortType = this.value;
+                    const sortedCourses = [...allCourses];
+                    
+                    switch(sortType) {
+                        case 'price-low':
+                            sortedCourses.sort((a, b) => a.discountedPrice - b.discountedPrice);
+                            break;
+                        case 'price-high':
+                            sortedCourses.sort((a, b) => b.discountedPrice - a.discountedPrice);
+                            break;
+                        case 'name':
+                            sortedCourses.sort((a, b) => a.title.localeCompare(b.title));
+                            break;
+                        default:
+                            // Default order (by id)
+                            sortedCourses.sort((a, b) => a.id - b.id);
+                    }
+                    
+                    displayCourses(sortedCourses);
+                });
+            }
+            
+            // Show course details in modal
+            function showCourseDetails(course) {
+                const modalTitle = document.getElementById('modalTitle');
+                const modalBody = document.getElementById('modalBody');
+                
+                modalTitle.textContent = course.title;
+                
+                const discountPercentage = Math.round((1 - (course.discountedPrice / course.originalPrice)) * 100);
+                
+                modalBody.innerHTML = `
+                    <div class="course-details">
+                        <div class="course-details-image">
+                            <img src="${course.image}" alt="${course.title}">
+                            ${discountPercentage > 0 ? 
+                                `<div class="discount-badge" style="position: static; display: inline-block; margin-top: 10px;">Save ${discountPercentage}%</div>` : 
+                                ''}
+                        </div>
+                        <div class="course-details-info">
+                            <h4>About This Course</h4>
+                            <p>${course.description}</p>
+                            
+                            <div class="course-details-price">
+                                ${course.discountedPrice < course.originalPrice ? 
+                                    `<span class="original-price">₹${course.originalPrice}</span><br>` : 
+                                    ''}
+                                <span class="discount-price">₹${course.discountedPrice}</span>
+                            </div>
+                            
+                            <h4>What You'll Get:</h4>
+                            <ul class="features-list">
+                                <li>Full lifetime access to all course materials</li>
+                                <li>High Quality Video Lectures</li>
+                                <li>Certificate of completion(By EduDrive)</li>
+                                <li>All Classes Will Be Recorded</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                
+                // Set up buy button
+                modalBuyBtn.onclick = function() {
+                    const telegramUrl = `https://t.me/eduDrive_seller_bot?start=${encodeURIComponent(course.title)}`;
+                    window.open(telegramUrl, '_blank');
+                };
+                
+                // Show modal
+                courseModal.classList.add('show');
+            }
+            
+            // Initialize search and sort
+            setupSearch();
+            setupSort();
+            
+            // Improve touch feedback for buttons
+            document.querySelectorAll('.btn, button').forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                button.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Handle orientation changes
+            window.addEventListener('orientationchange', function() {
+                // Small delay to ensure DOM has updated
+                setTimeout(() => {
+                    displayCourses(allCourses);
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
