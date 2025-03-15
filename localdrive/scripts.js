@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoThumbnail = document.getElementById('videoThumbnail');
     
     // YouTube video ID - replace with your actual YouTube video ID
-    const youtubeVideoId = 'YOUR_YOUTUBE_VIDEO_ID';
+    const youtubeVideoId = '4fG0y7n-w_0';
     
     // Function to open video modal
     function openVideoModal() {
