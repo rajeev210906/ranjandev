@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2850A0">
+    <title>LocalDrive - Divine File Sharing</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Teko:wght@400;500;600&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body class="krishna-theme">
+    <!-- Hindu Om symbol as a background element -->
+    <div class="om-symbol"></div>
+    
+    <!-- Background music -->
+    <div class="music-control">
+        <audio id="krishna-flute" loop>
+            <source src="krishna_flute.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+        <button id="music-toggle" title="Toggle Krishna Flute Music">
+            <i class="fas fa-music"></i>
+        </button>
+    </div>
+
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="images/localdrive-logo.png" alt="LocalDrive Logo">
+                <div class="logo-text">
+                    <span class="logo-title">LocalDrive</span>
+                    <span class="logo-tagline">inspired by Shree Krishna</span>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="https://github.com/ranjanlive/localDrive" class="github-link"><i class="fab fa-github"></i> GitHub</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Connect Your Devices with Divine Simplicity</h1>
+                <p>LocalDrive is a Krishna-inspired file sharing application that enables seamless connectivity between all your devices on the same network.</p>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">Download Now</a>
+                    <a href="#learn-more" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/localdrive-screenshot.png" alt="LocalDrive Screenshot">
+            </div>
+        </div>
+        <div class="hero-bg-elements">
+            <div class="peacock-feather"></div>
+            <div class="flute"></div>
+            <div class="lotus"></div>
+            <div class="mandala-pattern"></div>
+            <div class="om-pattern"></div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Divinely Inspired Features</h2>
+            <p class="section-subtitle">Just as Lord Krishna connected with everyone, LocalDrive connects all your devices effortlessly.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Instant Sharing</h3>
+                    <p>Transform any folder into a file server with just one click and share across devices.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3>QR Code Connectivity</h3>
+                    <p>Scan and connect instantly from mobile devices without typing long URLs.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <h3>Media Streaming</h3>
+                    <p>Stream videos and other media directly in your browser with playback controls.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Private & Secure</h3>
+                    <p>Files are only accessible on your local network, not exposed to the internet.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>Windows Integration</h3>
+                    <p>System tray support and context menu integration for quick folder sharing.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Cross-Platform Access</h3>
+                    <p>Connect from any device with a browser - phone, tablet, or computer.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How LocalDrive Works</h2>
+            <p class="section-subtitle">Simple steps to connect your digital world</p>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Start the server</h3>
+                        <p>Launch LocalDrive and click "Start Server" to begin sharing your files</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Connect devices</h3>
+                        <p>Scan the QR code with your mobile device or enter the displayed URL in any browser</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Share and access files</h3>
+                        <p>Browse, upload, download, and stream your files across all connected devices</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Enjoy seamless connectivity</h3>
+                        <p>Experience divine harmony in your digital ecosystem with LocalDrive</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="download">
+        <div class="container">
+            <h2>Download LocalDrive</h2>
+            <p class="section-subtitle">Get started with divine file sharing today</p>
+            
+            <div class="download-options">
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>LocalDrive Installer</h3>
+                    <p>Easy installation for Windows</p>
+                    <a href="https://github.com/ranjanlive/localDrive/releases/download/v1.0.0/LocalDriveSetup.exe" class="btn btn-primary">Download for Windows</a>
+                    <p class="version-info">Version 1.0.0 | 64-bit | Windows 10/11</p>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h3>Source Code</h3>
+                    <p>For developers and contributors</p>
+                    <a href="https://github.com/ranjanlive/localDrive" class="btn btn-secondary">View on GitHub</a>
+                    <p class="version-info">Licensed under GNU GPL v3</p>
+                </div>
+            </div>
+            
+            <div class="system-requirements">
+                <h4>System Requirements</h4>
+                <ul>
+                    <li><i class="fas fa-check"></i> Windows 10 or higher (64-bit)</li>
+                    <li><i class="fas fa-check"></i> 100 MB of free disk space</li>
+                    <li><i class="fas fa-check"></i> Local network connection</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>The Divine Inspiration</h2>
+                <p>LocalDrive is inspired by Lord Krishna's divine quality of connectivity. Just as Krishna connected with everyone in Vrindavan, LocalDrive connects all your devices on the same network.</p>
+                <p>Created in Bihar, India, this project aims to bring spiritual values of harmony and connection into the digital world. The design elements reflect Krishna's divine attributes - the peacock feather, the celestial blue, the golden flute, and the spirit of togetherness.</p>
+                <div class="hindu-symbols">
+                    <img src="images/om-symbol.svg" alt="Om" class="hindu-symbol">
+                    <img src="images/swastika-symbol.svg" alt="Swastika" class="hindu-symbol">
+                    <img src="images/shankha-symbol.svg" alt="Shankha" class="hindu-symbol">
+                </div>
+                <blockquote>
+                    <p>"जहां हर्ष है, वहां श्री कृष्ण हैं" (Where there is joy, there is Krishna)</p>
+                    <p>"Technology should bring us together, not isolate us. LocalDrive is our humble offering to create divine connectivity in your digital life."</p>
+                    <cite>— Ranjan Developer, Creator</cite>
+                </blockquote>
+            </div>
+            <div class="krishna-illustration">
+                <img src="images/krishna-illustration.png" alt="Lord Krishna Illustration">
+                <div class="radha-krishna-silhouette"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Is my data secure when using LocalDrive?</h3>
+                        <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. LocalDrive only makes your files accessible on your local network. It doesn't expose them to the internet. The application doesn't send any data to external servers.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Can I access my files from outside my home network?</h3>
+                        <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>LocalDrive is designed for local network use only. If you need remote access, you would need to set up additional networking solutions like a VPN to your home network.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Is there a mobile app version?</h3>
+                        <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Currently, LocalDrive works through a web interface that's fully responsive and works well on mobile browsers. A dedicated mobile app might be developed in the future.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>How does the QR code connectivity work?</h3>
+                        <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>When you start the LocalDrive server, it generates a QR code containing the local network URL. Simply scan this with your mobile device's camera to open the interface in your mobile browser.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>What makes LocalDrive different from other file sharing apps?</h3>
+                        <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>LocalDrive combines spiritual inspiration with modern technology, featuring an elegant Krishna-themed design. It's also completely open-source, respects your privacy, and includes unique features like the Windows context menu integration and built-in media streaming.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- YouTube Demo Video Floating Button -->
+    <div class="video-float-btn" id="videoFloatBtn" title="Watch Demo Video">
+        <div class="pulse-ring"></div>
+        <i class="fas fa-play"></i>
+        <span>Watch Demo</span>
+    </div>
+    
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <span class="video-close">&times;</span>
+            <div class="video-container">
+                <iframe id="youtubeVideo" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add this section above the footer -->
+    <section id="demo-video" class="demo-video">
+        <div class="container">
+            <h2>See LocalDrive in Action</h2>
+            <p class="section-subtitle">Watch our demo video to see how easy file sharing can be</p>
+            
+            <div class="video-wrapper">
+                <div class="video-thumbnail" id="videoThumbnail">
+                    <img src="images/video-thumbnail.jpg" alt="Demo Video Thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/localdrive-logo.png" alt="LocalDrive Logo">
+                    <span>LocalDrive</span>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#download">Download</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/ranjanlive/localDrive">GitHub Repository</a></li>
+                        <li><a href="https://github.com/ranjanlive/localDrive/issues">Report Issues</a></li>
+                        <li><a href="https://github.com/ranjanlive/localDrive/wiki">Documentation</a></li>
+                        <li><a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GPL License</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Connect</h4>
+                    <p>Developed with ❤️ in Bihar, India</p>
+                    <div class="social-links">
+                        <a href="https://github.com/ranjanlive"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 LocalDrive - GNU GPL v3 License</p>
+                <p class="krishna-dedication">श्री कृष्णार्पणमस्तु 🙏 हरे कृष्णा</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
